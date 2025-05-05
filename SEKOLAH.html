@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SMA LINGGAJATI ARAHAN - Website Resmi</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    /* Reset and Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8faff;
+      color: #222;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+      height: auto;
+    }
+    ul {
+      list-style: none;
+    }
+
+    /* Navbar */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #004aad;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+      z-index: 10000;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+    }
+    .logo {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      user-select: none;
+    }
+    nav ul {
+      display: flex;
+      gap: 30px;
+    }
+    nav ul li {
+      position: relative;
+    }
+    nav ul li a {
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 8px 6px;
+      display: inline-block;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: #f7ab05;
+    }
+    /* Dropdown Menu */
+    nav ul li ul.dropdown {
+      position: absolute;
+      top: 38px;
+      left: 0;
+      background: #004aad;
+      border-radius: 6px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+      min-width: 160px;
+      z-index: 1000;
+    }
+    nav ul li:hover ul.dropdown,
+    nav ul li:focus-within ul.dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    nav ul li ul.dropdown li a {
+      padding: 10px 12px;
+      font-weight: 500;
+      display: block;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+    nav ul li ul.dropdown li a:hover {
+      background: #f7ab05;
+      color: #004aad;
+      font-weight: 700;
+    }
+
+    /* Hamburger for mobile */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: white;
+      border-radius: 3px;
+      transition: 0.3s ease;
+    }
+
+    /* Hero Slider */
+    .hero-slider {
+      margin-top: 60px; /* to offset fixed header */
+      position: relative;
+      overflow: hidden;
+      max-height: 400px;
+    }
+    .slides {
+      display: flex;
+      transition: transform 0.6s ease;
+    }
+    .slide {
+      min-width: 100%;
+      height: 400px;
+      position: relative;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 20px;
+      background-size: cover;
+      background-position: center;
+    }
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 74, 173, 0.6);
+      z-index: 1;
+    }
+    .slide-content {
+      position: relative;
+      z-index: 10;
+      max-width: 900px;
+    }
+    .slide-content h1 {
+      font-size: 2.6rem;
+      margin-bottom: 16px;
+      font-weight: 700;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.6);
+      line-height: 1.1;
+    }
+    .slide-content p {
+      font-size: 1.3rem;
+      margin-bottom: 24px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.55);
+    }
+    .slide-content button {
+      background-color: #f7ab05;
+      font-weight: 700;
+      border: none;
+      padding: 14px 42px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 9px 20px rgba(247,171,5,0.6);
+      color: #004aad;
+    }
+    .slide-content button:hover,
+    .slide-content button:focus {
+      background-color: #c68000;
+      box-shadow: 0 12px 25px rgba(198,128,0,0.8);
+      outline: none;
+      color: white;
+    }
+
+    /* Slider controls */
+    .slider-controls {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      display: flex;
+      gap: 10px;
+      z-index: 20;
+    }
+    .control-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .control-dot.active,
+    .control-dot:hover {
+      background: #f7ab05;
+    }
+
+    /* Marquee Section */
+    .marquee-container {
+      background-color: #103f91;
+      color: #f7ab05;
+      font-weight: 700;
+      padding: 8px 0;
+      overflow: hidden;
+      user-select:none;
+      white-space: nowrap;
+      position: relative;
+    }
+    .marquee-text {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 20s linear infinite;
+      font-size: 1rem;
+      text-shadow: 1px 1px 2px #0009;
+    }
+    @keyframes marquee {
+      0%   { transform: translateX(0%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Section Tujuan */
+    #tujuan {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+    #tujuan h2 {
+      color: #004aad;
+      font-weight: 700;
+      font-size: 2.4rem;
+      margin-bottom: 28px;
+    }
+    .goals-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    .goal-card {
+      background: white;
+      padding: 28px 20px 32px;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,74,173,0.1);
+      max-width: 280px;
+      flex: 1 1 280px;
+      cursor: default;
+      transition: transform 0.3s ease;
+    }
+    .goal-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 32px rgba(0,74,173,0.2);
+    }
+    .goal-icon {
+      height: 80px;
+      margin-bottom: 22px;
+    }
+    .goal-title {
+      font-weight: 700;
+      color: #004aad;
+      font-size: 1.15rem;
+      margin-bottom: 14px;
+    }
+    .goal-desc {
+      font-size: 1rem;
+      color: #444;
+      line-height: 1.45;
+    }
+
+    /* Profil Section */
+    #profil {
+      background: white;
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 40px auto;
+      border-radius: 12px;
+      box-shadow: 0 12px 35px rgba(0,74,173,0.1);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: center;
+    }
+    #profil img {
+      border-radius: 10px;
+      flex: 1 1 400px;
+      max-width: 450px;
+      object-fit: cover;
+      box-shadow: 0 10px 30px rgba(0,74,173,0.15);
+    }
+    #profil .profile-text {
+      flex: 1 1 450px;
+      color: #222;
+      font-size: 1.1rem;
+    }
+    #profil .profile-text h2 {
+      color: #004aad;
+      font-size: 2rem;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+    #profil .profile-text p {
+      line-height: 1.6;
+    }
+    /* Struktur Organisasi */
+    #struktur {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 20px 40px;
+      text-align: center;
+    }
+    #struktur h2 {
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: #004aad;
+      margin-bottom: 36px;
+    }
+    .struktur-imgs {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    .struktur-imgs img {
+      max-width: 280px;
+      border-radius: 12px;
+      box-shadow: 0 12px 28px rgba(0,74,173,0.15);
+      user-select: none;
+    }
+    /* Berita Section */
+    #berita {
+      max-width: 1200px;
+      margin: 0 auto 80px;
+      padding: 0 20px;
+    }
+    #berita h2 {
+      font-weight: 700;
+      color: #004aad;
+      font-size: 2.4rem;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .news-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 32px;
+    }
+    .news-item {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,74,173,0.12);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .news-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 45px rgba(0,74,173,0.25);
+    }
+    .news-thumb {
+      height: 180px;
+      object-fit: cover;
+      user-select: none;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      flex-shrink: 0;
+      width: 100%;
+    }
+    .news-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .news-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #004aad;
+    }
+    .news-date {
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: auto;
+      user-select: none;
+    }
+    /* Footer */
+    footer {
+      background-color: #004aad;
+      color: white;
+      text-align: center;
+      padding: 20px 15px;
+      font-size: 0.95rem;
+      user-select: none;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+    footer a {
+      color: #f7ab05;
+      font-weight: 600;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    /* Responsive */
+    @media (max-width: 1024px) {
+      #profil {
+        flex-direction: column;
+      }
+    }
+    @media (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        background: #004aad;
+        position: fixed;
+        right: 0;
+        top: 60px;
+        width: 220px;
+        height: calc(100% - 60px);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        padding-top: 10px;
+        z-index: 1050;
+        border-radius: 0 0 0 16px;
+        display: none;
+      }
+      nav ul.show {
+        display: flex;
+        transform: translateX(0);
+      }
+      nav ul li {
+        margin: 10px 20px;
+      }
+      .hamburger {
+        display: flex;
+        cursor: pointer;
+      }
+      nav {
+        position: relative;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    
+    <div class="nav-container" >
+      <div class="logo" style="display: flex; align-items: center; gap: 10px; justify-content: flex-start;" tabindex="0" aria-label="Logo HIMARPL POLINDRA"><img src="img/WhatsApp_Image_2025-05-06_at_00.56.38-removebg-preview.png" alt="Logo HIMARPL POLINDRA" style="height: 50px;">SMA LINGGAJATI ARAHAN</div>
+      <nav aria-label="Navigasi utama">
+        <div class="hamburger" aria-label="Buka menu navigasi" role="button" tabindex="0" aria-expanded="false" aria-controls="mobile-menu">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <ul id="mobile-menu">
+          <li><a href="#tujuan" tabindex="0">Tujuan</a></li>
+          <li><a href="#profil" tabindex="0">Profil</a></li>
+          <li><a href="#struktur" tabindex="0">Struktur Organisasi</a></li>
+          <li><a href="#berita" tabindex="0">Berita</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Slider -->
+  <section class="hero-slider" aria-label="Slider gambar utama">
+    <div class="slides" aria-live="polite">
+      <div class="slide" style="background-image: url('img/WhatsApp\ Image\ 2025-05-06\ at\ 00.44.45.jpeg');" aria-label="Slide 1">
+        <div class="slide-content">
+          <h1>Selamat Datang di SMA LINGGAJATI ARAHAN</h1>
+          <p>Mengembangkan Potensi, Inovasi, dan Kekeluargaan</p>
+          <button onclick="document.getElementById('tujuan').scrollIntoView({behavior:'smooth'})">Pelajari Lebih Lanjut</button>
+        </div>
+      </div>
+      <div class="slide" style="background-image: url('https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');" aria-label="Slide 2">
+        <div class="slide-content">
+          <h1>Aktif dalam Kegiatan Pengembangan Teknologi</h1>
+          <p>Mengasah Keahlian Melalui Pelatihan dan Workshop</p>
+          <button onclick="document.getElementById('profil').scrollIntoView({behavior:'smooth'})">Profil Kami</button>
+        </div>
+      </div>
+      <div class="slide" style="background-image: url('https://images.pexels.com/photos/3183186/pexels-photo-3183186.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');" aria-label="Slide 3">
+        <div class="slide-content">
+          <h1>Membangun Jejaring dan Profesionalisme</h1>
+          <p>Bersama Membentuk Generasi Unggul di Bidang Pendidikan</p>
+          <button onclick="document.getElementById('berita').scrollIntoView({behavior:'smooth'})">Berita Terbaru</button>
+        </div>
+      </div>
+    </div>
+    <div class="slider-controls" role="tablist" aria-label="Kontrol slide">
+      <div class="control-dot" role="tab" tabindex="0" aria-selected="true" aria-controls="slide1"></div>
+      <div class="control-dot" role="tab" tabindex="-1" aria-selected="false" aria-controls="slide2"></div>
+      <div class="control-dot" role="tab" tabindex="-1" aria-selected="false" aria-controls="slide3"></div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-container" aria-label="Pengumuman penting">
+    <div class="marquee-text" aria-live="off">
+      Pendaftaran siswa baru SMA LINGGAJATI ARAHAN sudah dibuka! Segera daftarkan diri Anda &nbsp; • &nbsp; Ikuti workshop pengembangan aplikasi bulan ini! &nbsp; • &nbsp; Jadilah bagian dari sekolah inovatif kami!
+    </div>
+  </div>
+
+  <!-- Tujuan -->
+  <section id="tujuan" tabindex="-1" aria-labelledby="tujuan-title">
+    <h2 id="tujuan-title">Tujuan SMA LINGGAJATI ARAHAN</h2>
+    <div class="goals-container">
+      <article class="goal-card" tabindex="0" aria-label="Tujuan mengembangkan kemampuan mahasiswa">
+        <img class="goal-icon" src="https://cdn-icons-png.flaticon.com/512/3050/3050220.png" alt="Ikon belajar" />
+        <h3 class="goal-title">Mengembangkan Kemampuan</h3>
+        <p class="goal-desc">Meningkatkan skill dan pengetahuan mahasiswa dalam rekayasa perangkat lunak melalui berbagai kegiatan.</p>
+      </article>
+      <article class="goal-card" tabindex="0" aria-label="Tujuan mempererat hubungan dan organisasi">
+        <img class="goal-icon" src="https://cdn-icons-png.flaticon.com/512/3106/3106955.png" alt="Ikon komunitas" />
+        <h3 class="goal-title">Mempererat Hubungan</h3>
+        <p class="goal-desc">Membangun jejaring yang erat antar anggota dan institusi melalui kolaborasi dan aktivitas sosial.</p>
+      </article>
+      <article class="goal-card" tabindex="0" aria-label="Tujuan melaksanakan inovasi teknologi">
+        <img class="goal-icon" src="https://cdn-icons-png.flaticon.com/512/1147/1147860.png" alt="Ikon inovasi" />
+        <h3 class="goal-title">Melaksanakan Inovasi</h3>
+        <p class="goal-desc">Memfasilitasi ide kreatif dan pengembangan solusi teknologi baru dalam bidang perangkat lunak.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Profil -->
+  <section id="profil" aria-labelledby="profil-title">
+    <img src="https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260" alt="Foto Kegiatan HIMARPL" />
+    <div class="profile-text">
+      <h2 id="profil-title">Profil SMA LINGGAJATI ARAHAN</h2>
+      <p>
+        HIMARPL POLINDRA adalah sebuah himpunan mahasiswa di Politeknik Negeri Indramayu yang berfokus
+        pada pengembangan dan pengajaran bidang Rekayasa Perangkat Lunak.<br /><br />
+        Organisasi ini bertujuan membantu mahasiswa untuk mengembangkan kompetensi teknis dan soft skills,
+        meningkatkan kreatifitas, serta membuka jaringan kerja sama dengan instansi dan industri terkait.
+      </p>
+      <p>
+        Kami rutin menyelenggarakan pelatihan, workshop, kompetisi, dan berbagai kegiatan bermanfaat demi kemajuan bersama.
+      </p>
+    </div>
+  </section>
+
+  <!-- Struktur Organisasi -->
+  <section id="struktur" aria-labelledby="struktur-title">
+    <h2 id="struktur-title">Struktur Organisasi</h2>
+    <div class="struktur-imgs" role="list">
+      <img src="https://images.pexels.com/photos/3183169/pexels-photo-3183169.jpeg?auto=compress&cs=tinysrgb&h=320" alt="Struktur Organisasi 1" role="listitem" />
+      <img src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&h=320" alt="Struktur Organisasi 2" role="listitem" />
+      <img src="https://images.pexels.com/photos/247207/pexels-photo-247207.jpeg?auto=compress&cs=tinysrgb&h=320" alt="Struktur Organisasi 3" role="listitem" />
+    </div>
+  </section>
+
+  <!-- Berita -->
+  <section id="berita" aria-labelledby="berita-title">
+    <h2 id="berita-title">Berita Terbaru</h2>
+    <div class="news-list">
+      <article class="news-item" tabindex="0" aria-label="Berita pelatihan workshop">
+        <img class="news-thumb" src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&h=225" alt="Pelatihan Workshop" />
+        <div class="news-content">
+          <h3 class="news-title">Suksesnya Pelatihan Software Development</h3>
+          <time class="news-date" datetime="2023-05-10">10 Mei 2023</time>
+        </div>
+      </article>
+      <article class="news-item" tabindex="0" aria-label="Berita kompetisi mahasiswa">
+        <img class="news-thumb" src="https://images.pexels.com/photos/3183171/pexels-photo-3183171.jpeg?auto=compress&cs=tinysrgb&h=225" alt="Kompetisi Mahasiswa" />
+        <div class="news-content">
+          <h3 class="news-title">Mahasiswa HIMARPL Raih Juara Lomba Coding Nasional</h3>
+          <time class="news-date" datetime="2023-04-24">24 April 2023</time>
+        </div>
+      </article>
+      <article class="news-item" tabindex="0" aria-label="Berita pengabdian masyarakat">
+        <img class="news-thumb" src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&h=225" alt="Pengabdian Masyarakat" />
+        <div class="news-content">
+          <h3 class="news-title">Program Pengabdian Masyarakat HIMARPL POLINDRA</h3>
+          <time class="news-date" datetime="2023-03-15">15 Maret 2023</time>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2023 HIMARPL POLINDRA | <a href="mailto:himarpl@polindra.ac.id">himarpl@polindra.ac.id</a> | Tel: (0234) 123456</p>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const menu = document.querySelector('nav ul#mobile-menu');
+    hamburger.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', !expanded);
+      menu.classList.toggle('show');
+    });
+
+    // Keyboard support for hamburger menu
+    hamburger.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        hamburger.click();
+      }
+    });
+
+    // Hero Slider
+    const slides = document.querySelector('.slides');
+    const dots = Array.from(document.querySelectorAll('.control-dot'));
+    let currentSlide = 0;
+    const totalSlides = dots.length;
+
+    function showSlide(index) {
+      if(index < 0) index = totalSlides -1;
+      else if (index >= totalSlides) index = 0;
+      currentSlide = index;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+      updateDots();
+    }
+
+    function updateDots() {
+      dots.forEach((dot,i) => {
+        if(i === currentSlide) {
+          dot.classList.add('active');
+          dot.setAttribute('aria-selected','true');
+          dot.setAttribute('tabindex','0');
+        } else {
+          dot.classList.remove('active');
+          dot.setAttribute('aria-selected','false');
+          dot.setAttribute('tabindex','-1');
+        }
+      });
+    }
+
+    dots.forEach((dot,i) => {
+      dot.addEventListener('click', () => showSlide(i));
+      dot.addEventListener('keydown', e => {
+        if(e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          showSlide(i);
+        }
+      });
+    });
+
+    // Auto slide every 7 seconds
+    setInterval(() => {
+      showSlide(currentSlide +1);
+    }, 7000);
+
+    // Initialize slider
+    showSlide(0);
+  </script>
+</body>
+</html>
+
